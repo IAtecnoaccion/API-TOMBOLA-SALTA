@@ -200,7 +200,8 @@
       }
     };
 
-    Redoc.init(spec, {}, document.getElementById('redoc-container'));
+    // Initialize ReDoc with Try It Out enabled
+    Redoc.init(spec, { tryItOutEnabled: true }, document.getElementById('redoc-container'));
   </script>
 </body>
 </html>
