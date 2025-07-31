@@ -53,8 +53,8 @@
     "schemas": {
       "ApiResponse": {
         "type": "object",
-        "properties": {
-          "jugadaDiaria": {
+      "properties": {
+        "jugadaDiaria": {
             "$ref": "#/components/schemas/JugadaDiaria"
           },
           "today": {
@@ -64,14 +64,19 @@
           "resultados": {
             "$ref": "#/components/schemas/Resultados"
           },
-          "ultimosJuegos": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UltimoJuego"
-            }
+        "ultimosJuegos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/UltimoJuego"
           }
         },
-        "required": ["jugadaDiaria", "today", "resultados", "ultimosJuegos"]
+        "fecha": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Fecha de consulta de los resultados"
+        }
+        },
+      "required": ["jugadaDiaria", "today", "resultados", "ultimosJuegos", "fecha"]
       },
       "JugadaDiaria": {
         "type": "object",
@@ -94,23 +99,23 @@
       "Resultados": {
         "type": "object",
         "properties": {
-          "EXTRA": {
-            "$ref": "#/components/schemas/SorteoRegionMap"
-          },
-          "NOCTURNO": {
-            "$ref": "#/components/schemas/SorteoRegionMap"
-          },
-          "MATUTINO": {
-            "$ref": "#/components/schemas/SorteoRegionMap"
-          },
-          "VESPERTINO": {
-            "$ref": "#/components/schemas/SorteoRegionMap"
-          },
-          "NOCTURNO EXTRA": {
-            "$ref": "#/components/schemas/SorteoRegionMap"
-          }
+        "EXTRA": {
+          "$ref": "#/components/schemas/ModalidadResult"
         },
-        "required": ["EXTRA", "NOCTURNO", "MATUTINO", "VESPERTINO"]
+        "NOCTURNO": {
+          "$ref": "#/components/schemas/ModalidadResult"
+        },
+        "MATUTINO": {
+          "$ref": "#/components/schemas/ModalidadResult"
+        },
+        "VESPERTINO": {
+          "$ref": "#/components/schemas/ModalidadResult"
+        },
+        "NOCTURNO EXTRA": {
+          "$ref": "#/components/schemas/ModalidadResult"
+        }
+        },
+      "required": ["EXTRA", "NOCTURNO", "MATUTINO", "VESPERTINO", "NOCTURNO EXTRA"]
       },
       "SorteoRegionMap": {
         "type": "object",
@@ -144,8 +149,8 @@
           },
           "tipoSorteo": {
             "type": "string",
-            "enum": ["M", "V"],
-            "description": "M = Matutino, V = Vespertino"
+            "enum": ["E", "N", "M", "V"],
+            "description": "E = Extra, N = Nocturno, M = Matutino, V = Vespertino"
           },
           "atHome": {
             "type": "integer",
@@ -166,7 +171,7 @@
             "example": "18/07/2025"
           }
         },
-        "required": ["descripcionSorteo"]
+        "required": ["horaSorteo", "descripcionSorteo", "tipoSorteo", "atHome", "extracto", "fechaSorteo"]
       },
       "UltimoJuego": {
         "type": "object",
@@ -184,6 +189,21 @@
           }
         },
         "required": ["numeroSorteo", "fechaSorteo", "fecha"]
+      }
+      ,
+      "ModalidadResult": {
+        "type": "object",
+        "properties": {
+          "extractos": {
+            "$ref": "#/components/schemas/SorteoRegionMap"
+          },
+          "f_sorte": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de sorteo principal"
+          }
+        },
+        "required": ["extractos", "f_sorte"]
       }
     }
   }
