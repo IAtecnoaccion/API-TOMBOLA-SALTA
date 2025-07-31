@@ -6,70 +6,8 @@
   <title>API Tómbola Salta - Documentación</title>
 </head>
 <body>
-  <div id="redoc-container"></div>
+  <redoc spec-url="openapi.json" try-it-out-enabled></redoc>
   <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
-  <script>
-    const spec = {
-      "openapi": "3.0.0",
-      "info": {
-        "title": "API de Resultados de Tómbola (Quiniela Salta)",
-        "version": "1.1.0",
-        "description": "Esta especificación OpenAPI describe el endpoint para obtener los extractos de la Tómbola Salteña incluyendo los sorteos EXTRA, NOCTURNO, MATUTINO, VESPERTINO y NOCTURNO EXTRA (Salta La Revancha) en las diferentes regiones donde se sortea de SALTA, NACIONAL (CIUDAD DE BUENOS AIRES), JUJUY Y BSAS (PROVINCIA DE BUENOS AIRES)."
-      },
-      "servers": [
-        {
-          "url": "https://www.loteriadesalta.com/loteria-ws/api"
-        }
-      ],
-      "paths": {
-        "/extracto/TOMBOLA/ultimo/salta": {
-          "get": {
-            "summary": "Último extracto de Tómbola en Salta",
-            "description": "Obtiene los 20 números sorteados para cada tipo de sorteo y región.\nParámetro de consulta ` _ ` (timestamp en ms) para evitar caché.",
-            "parameters": [
-              {
-                "name": "_",
-                "in": "query",
-                "description": "Timestamp Unix en milisegundos para evitar caché",
-                "required": false,
-                "schema": {
-                  "type": "integer",
-                  "format": "int64",
-                  "example": 1745328095450
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Respuesta exitosa con JSON de resultados",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/ApiResponse"
-                    }
-                  }
-                }
-              },
-              "400": {
-                "description": "Solicitud mal formada (Bad Request)"
-              },
-              "500": {
-                "description": "Error interno del servidor"
-              }
-            }
-          }
-        }
-      },
-      "components": {
-        "schemas": {
-          "ApiResponse": {
-            "type": "object",
-            "properties": {
-              "jugadaDiaria": {
-                "$ref": "#/components/schemas/JugadaDiaria"
-              },
-              "today": {
-                "type": "integer",
                 "format": "int64"
               },
               "resultados": {
